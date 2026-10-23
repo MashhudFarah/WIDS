@@ -1,34 +1,27 @@
-# 🛡️ WIDS-ESP32
+# WIDS-ESP32
 
-**A standalone WiFi Intrusion Detection System that fits in your pocket.**
-
-Built on a single ESP32, WIDS-ESP32 sniffs 802.11 management traffic in promiscuous mode, scores it against a self-learned statistical baseline, and flags deauth floods, evil-twin-style probe storms, and beacon spam in real time — no cloud, no companion app, no internet connection required.
+A standalone WiFi Intrusion Detection System built on a single ESP32. It sniffs 802.11 management traffic in promiscuous mode, scores it against a self-learned statistical baseline, and flags deauth floods, evil-twin-style probe storms, and beacon spam in real time. It requires no cloud, no companion app, and no internet connection.
 
 ![Platform](https://img.shields.io/badge/platform-ESP32-blue)
 ![Language](https://img.shields.io/badge/language-C%2B%2B-orange)
 ![Framework](https://img.shields.io/badge/framework-Arduino-00979D)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Status](https://img.shields.io/badge/status-active-brightgreen)
 
----
+## Features
 
-## ✨ Features
+- **Promiscuous-mode sniffing** — captures every 802.11 management frame in range (probe, beacon, auth, deauth, disassoc), not just traffic addressed to it.
+- **Self-calibrating baseline** — learns normal traffic for your environment over a 20-sample rolling window before it starts detecting, instead of relying on hardcoded "normal" values.
+- **Statistical anomaly scoring** — flags bursts using z-score deviation from the learned baseline (mean + standard deviation) rather than flat thresholds alone.
+- **Weighted threat score (0–100)** — combines burst detection, deauth storm tracking, and broadcast-deauth heuristics into a single live score with automatic decay.
+- **Physical alerting** — RGB LED status (green / yellow / red) plus an active buzzer alarm on high-threat states, no screen required.
+- **Live web dashboard** — self-hosted at `192.168.4.1`, no internet needed, auto-refreshing charts and stats.
+- **Adjustable sensitivity** — one slider remaps every detection threshold at once, persisted to flash across reboots.
+- **Channel scanner and calibration** — rescan and re-lock onto a specific WiFi channel on demand, pausing detection safely while it does.
+- **Dual-core stable** — the web server runs in its own FreeRTOS task pinned to Core 0, so serving dashboard requests never blocks packet capture or trips the watchdog.
 
-- 📡 **Promiscuous-mode sniffing** — captures every 802.11 management frame in range (probe, beacon, auth, deauth, disassoc), not just traffic addressed to it
-- 📊 **Self-calibrating baseline** — learns normal traffic for your environment over a 20-sample rolling window before it starts detecting, instead of relying on hardcoded "normal" values
-- 🧠 **Statistical anomaly scoring** — flags bursts using z-score deviation from the learned baseline (mean + standard deviation) rather than flat thresholds alone
-- 🚨 **Weighted threat score (0–100)** — combines burst detection, deauth storm tracking, and broadcast-deauth heuristics into a single live score with automatic decay
-- 💡 **Physical alerting** — RGB LED status (green / yellow / red) plus an active buzzer alarm on high-threat states, no screen required
-- 🌐 **Live web dashboard** — self-hosted at `192.168.4.1`, no internet needed, auto-refreshing charts and stats
-- 🎚️ **Adjustable sensitivity** — one slider remaps every detection threshold at once, persisted to flash across reboots
-- 📶 **Channel scanner & calibration** — rescan and re-lock onto a specific WiFi channel on demand, pausing detection safely while it does
-- ⚙️ **Dual-core stable** — the web server runs in its own FreeRTOS task pinned to Core 0, so serving dashboard requests never blocks packet capture or trips the watchdog
+## How It Works
 
----
-
-## 🧩 How It Works
-
-```
+```text
  802.11 frames (air)
         │
         ▼
@@ -54,9 +47,7 @@ Built on a single ESP32, WIDS-ESP32 sniffs 802.11 management traffic in promiscu
 
 The ESP32 boots as its own access point (`ESP32-IDS`) and spends the first ~20 seconds **calibrating** — quietly learning what normal probe/beacon/deauth volume looks like on the current channel — before it starts flagging anomalies. This is what keeps the false-positive rate low in busy environments instead of just screaming at every beacon frame that passes by.
 
----
-
-## 🎯 What It Detects
+## What It Detects
 
 | Attack | How it's recognized |
 |---|---|
@@ -71,13 +62,11 @@ Each hit adds weighted points to a single **threat score**, which decays by 15 p
 
 | Threat Score | Status | LED |
 |---|---|---|
-| 0–30 | `SAFE` | 🟢 Green |
-| 31–70 | `WARNING` | 🟡 Yellow |
-| 71–100 | `ATTACK` | 🔴 Red + buzzer |
+| 0–30 | `SAFE` | Green |
+| 31–70 | `WARNING` | Yellow |
+| 71–100 | `ATTACK` | Red + buzzer |
 
----
-
-## 🔧 Hardware
+## Hardware
 
 | Component | ESP32 Pin | Purpose |
 |---|---|---|
@@ -88,9 +77,7 @@ Each hit adds weighted points to a single **threat score**, which decays by 15 p
 
 Any standard ESP32 dev board works — no external WiFi hardware needed, since it uses the onboard radio in promiscuous mode.
 
----
-
-## 🚀 Getting Started
+## Getting Started
 
 ### Requirements
 - ESP32 dev board
@@ -117,9 +104,7 @@ git clone https://github.com/MashhudFarah/WIDS.git
 
 No internet connection is required — the ESP32 serves everything locally.
 
----
-
-## 📡 API Reference
+## API Reference
 
 The dashboard talks to the ESP32 over a small local JSON API — you can hit these directly too:
 
@@ -147,11 +132,9 @@ Example `/stats` response:
 }
 ```
 
----
+## Project Structure
 
-## 📂 Project Structure
-
-```
+```text
 WIDS/
 ├── WIDS.ino          # Setup, main loop, sensitivity engine, core task pinning
 ├── config.h           # Pin defs, shared globals, function prototypes
@@ -160,18 +143,18 @@ WIDS/
 └── webserver.cpp       # Dashboard HTML/JS, JSON API, REST endpoints
 ```
 
----
-
-## ⚠️ Disclaimer
+## Disclaimer
 
 This project is built for **educational and defensive research purposes only**. It passively monitors traffic in your own environment — it does not transmit attacks. Any misuse to monitor networks you don't own or have permission to test is strictly prohibited and may be illegal in your jurisdiction.
 
----
+## Credits
 
-## 👥 Credits
+This was a collaborative project built with [Shafayet22](https://github.com/Shafayet22).
 
-Built by [MashhudFarah](https://github.com/MashhudFarah) and [Shafayet22](https://github.com/Shafayet22).
+- **My contribution:** [Write exactly what you built here — e.g., the ESP32 firmware, the anomaly detection logic, hardware wiring].
+- **Shafayet22's contribution:** [Write exactly what he built here — e.g., the web dashboard UI, testing, or data logging].
 
-## 📄 License
+## License
 
 Released under the [MIT License](LICENSE).
+```
