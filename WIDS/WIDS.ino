@@ -2,7 +2,7 @@
 
 // ================= WIFI CREDENTIALS =================
 const char *ssid = "ESP32-IDS";
-const char *password = "12345678";
+const char *password = "p@55w0rD";
 
 // ================= DEFINITIONS =================
 int sensitivity = 50; 
