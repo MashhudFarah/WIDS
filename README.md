@@ -151,6 +151,11 @@ set.
 
 His repository: https://github.com/Shafayet22/WIDS-ESP32
 
+## AI
+
+I used AI tools to help write and debug the firmware. I ran everything myself
+and fixed what broke.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
