@@ -98,7 +98,8 @@ git clone https://github.com/MashhudFarah/WIDS.git
 ### Connect to the dashboard
 
 1. On your phone or laptop, scan for WiFi networks
-2. Connect to **`ESP32-IDS`** (password: `12345678`)
+2. Connect to **`ESP32-IDS`**. The default password is in `config.h` —
+   change it before you use this anywhere real.
 3. Open `http://192.168.4.1` in a browser
 4. Watch the threat score, live packet counts, and charts update in real time
 
