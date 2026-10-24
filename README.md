@@ -149,10 +149,18 @@ This project is built for **educational and defensive research purposes only**. 
 
 ## Credits
 
-This was a collaborative project built with [Shafayet22](https://github.com/Shafayet22).
+Built with [Shafayet22](https://github.com/Shafayet22).
 
-- **My contribution:** [Write exactly what you built here — e.g., the ESP32 firmware, the anomaly detection logic, hardware wiring].
-- **Shafayet22's contribution:** [Write exactly what he built here — e.g., the web dashboard UI, testing, or data logging].
+I wrote the firmware — the promiscuous-mode sniffer, the detection and
+scoring logic, the web dashboard's server side, and the wiring for the
+LEDs and buzzer.
+
+Shafayet22 tested it end to end. He set up a Kali Linux machine and a
+second ESP32 to launch deauth floods and beacon spam against a test
+access point, then confirmed the WIDS flagged them on the dashboard and
+the LEDs. That testing is how the detection thresholds got set.
+
+His repository is here: https://github.com/Shafayet22/WIDS-ESP32
 
 ## License
 
