@@ -165,4 +165,3 @@ His repository is here: https://github.com/Shafayet22/WIDS-ESP32
 ## License
 
 Released under the [MIT License](LICENSE).
-```
